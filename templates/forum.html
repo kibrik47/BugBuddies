@@ -4,13 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ category }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> 
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <div class="container">
     <h1>{{ category }}</h1>
-    <h2><a href="/forum/{{ category }}/unresolved">Unresolved</a></h2>
-    <h2><a href="/forum/{{ category }}/post">Post an Error</a></h2>
+    <div class="search">
+      <!-- Add search bar here -->
+      <input type="text" placeholder="Search...">
+    </div>
+    <div class="clickable-options">
+      <!-- Clickable options -->
+      <a href="/">Main</a>
+      <a href="/forum/{{ category }}/post">Post an issue</a>
+    </div>
+  </div>
+
+  <!-- User icon container (Sign Up) -->
+  <div class="user-icon-container">
+    <!-- User icon image -->
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/New_user_icon-01.svg/1200px-New_user_icon-01.svg.png" alt="User Icon" class="user-icon">
+    <!-- Sign up button -->
+    <button class="sign-up-button">Sign Up</button>
   </div>
 </body>
 </html>
