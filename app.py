@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask_pymongo import PyMongo
 import bcrypt
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='templates/static', static_url_path='/static')
 app.secret_key = "your_secret_key"
 
 # Configure MongoDB connection

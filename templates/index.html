@@ -4,73 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Category Selection</title>
-  <style>
-    body {
-      background-color: #3498db; /* Blue background color */
-      display: flex;
-      flex-direction: column; /* Arrange items vertically */
-      align-items: center;
-      justify-content: center;
-      height: 100vh; /* Make the body take the full height of the viewport */
-      margin: 0; /* Remove default margin */
-    }
-
-    .search {
-      color: white; /* White text color */
-      font-size: 36px; /* Larger font size */
-      margin-bottom: 20px; /* Add some space below the search */
-    }
-
-    .squares-container {
-      display: flex;
-      flex-wrap: wrap; /* Allow squares to wrap to the next line */
-      justify-content: center; /* Center squares horizontally */
-    }
-
-    .square {
-      width: 150px;
-      height: 150px;
-      background-color: white; /* White square background color */
-      margin: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      font-size: 24px;
-      cursor: pointer; /* Change cursor to pointer when hovering over squares */
-      text-decoration: none; /* Remove underline from anchor tags */
-      color: black; /* Black text color */
-    }
-
-    /* Style for the user icon container */
-    .user-icon-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Style for the user icon */
-    .user-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    /* Style for the sign up button */
-    .sign-up-button {
-      background-color: #fff;
-      color: #3498db;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <h1 class="search">Select a Category</h1>
