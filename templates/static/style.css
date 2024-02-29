@@ -67,3 +67,42 @@ body {
     cursor: pointer;
     margin-top: 10px;
 }
+
+/* Add styles for the forum page */
+body {
+    background-color: #3498db;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    color: white;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.search {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.clickable-options {
+    margin-top: 20px;
+}
+
+.clickable-options a {
+    display: inline-block;
+    margin-right: 20px;
+    text-decoration: none;
+    color: #3498db;
+    font-size: 18px;
+}
