@@ -50,5 +50,22 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+# Add these lines for the forum routes
+@app.route('/forum/<category>')
+def forum(category):
+    return render_template('forum.html', category=category)
+
+@app.route('/forum/<category>/unresolved')
+def unresolved_posts(category):
+    # Add logic to fetch unresolved posts for the given category
+    # For now, let's return a simple message
+    return f"Unresolved posts for {category}"
+
+@app.route('/forum/<category>/post')
+def post_issue(category):
+    # Add logic for posting an issue in the given category
+    # For now, let's return a simple message
+    return f"Post an issue in {category}"
+
 if __name__ == '__main__':
     app.run(debug=True)
