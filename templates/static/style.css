@@ -79,6 +79,7 @@ body.forum {
 h1 {
     font-size: 36px;
     color: white;
+    margin-top: 20px; /* Adjust the margin to create space between category and search bar */
 }
 
 .container {
@@ -91,10 +92,17 @@ h1 {
     margin-top: 20px;
 }
 
+/* Adjust the search bar styles */
 .search-bar {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    width: 80%; /* Increase the width of the search bar */
+    padding: 15px; /* Increase padding for better visibility */
+    box-sizing: border-box;
+    margin: 20px auto; /* Center the search bar and provide margin from the category */
+
+    /* Additional styles for better visibility */
+    font-size: 18px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
 }
 
 .button-container {
@@ -102,6 +110,7 @@ h1 {
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    margin-top: 20px; /* Add margin to move the options below the search bar */
 }
 
 .button-container a {
@@ -109,3 +118,5 @@ h1 {
     color: white;
     margin-right: 20px;
 }
+
+/* ... Other styles ... */
