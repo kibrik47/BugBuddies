@@ -34,18 +34,21 @@ def post_issue(category):
     # For now, let's return a simple message
     return f"Post an issue in {category}"
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    users = mongo.db.users
-    login_user = users.find_one({'username' : request.form['username']})
+    if request.method == 'POST':
+        users = mongo.db.users
+        login_user = users.find_one({'username' : request.form['username']})
 
-    if login_user:
-        if bcrypt.checkpw(request.form['password'].encode('utf-8'), login_user['password']):
-            session['username'] = request.form['username']
-            session['category'] = 'Default Category'  # Set a default category
-            return redirect(url_for('index'))
+        if login_user:
+            if bcrypt.checkpw(request.form['password'].encode('utf-8'), login_user['password']):
+                session['username'] = request.form['username']
+                session['category'] = 'Default Category'  # Set a default category
+                return redirect(url_for('index'))
 
-    return 'Invalid username/password combination'
+        return 'Invalid username/password combination'
+
+    return render_template('login.html')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
