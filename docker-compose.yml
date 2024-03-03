@@ -6,3 +6,25 @@ services:
       - "5000:5000"
     volumes:
       - C:\Users\POTTER-2.0\Desktop\FinalProject\temp-404:/app
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/your_database
+    networks:
+      - temp-404_network  # Specify the network name
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - temp-404_network  # Specify the network name
+
+networks:
+  temp-404_network:  # Define the network
+    driver: bridge
+
+volumes:
+  mongodb-data:
