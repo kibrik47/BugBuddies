@@ -13,21 +13,42 @@ mongo = PyMongo(app)
 @app.route('/')
 def index():
     if 'username' in session:
-        return 'You are logged in as ' + session['username']
+        return render_template('index.html', category=session.get('category', 'Default Category'))
 
-    return render_template('index.html')
+    return render_template('index.html', category='Default Category')
 
-@app.route('/login', methods=['POST'])
+# Add these lines for the forum routes
+@app.route('/forum/<category>')
+def forum(category):
+    return render_template('forum.html', category=category)
+
+@app.route('/forum/<category>/unresolved')
+def unresolved_posts(category):
+    # Add logic to fetch unresolved posts for the given category
+    # For now, let's return a simple message
+    return f"Unresolved posts for {category}"
+
+@app.route('/forum/<category>/post')
+def post_issue(category):
+    # Add logic for posting an issue in the given category
+    # For now, let's return a simple message
+    return render_template('post.html', category=category)
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    users = mongo.db.users
-    login_user = users.find_one({'username' : request.form['username']})
+    if request.method == 'POST':
+        users = mongo.db.users
+        login_user = users.find_one({'username' : request.form['username']})
 
-    if login_user:
-        if bcrypt.checkpw(request.form['password'].encode('utf-8'), login_user['password']):
-            session['username'] = request.form['username']
-            return redirect(url_for('index'))
+        if login_user:
+            if bcrypt.checkpw(request.form['password'].encode('utf-8'), login_user['password']):
+                session['username'] = request.form['username']
+                session['category'] = 'Default Category'  # Set a default category
+                return redirect(url_for('index'))
 
-    return 'Invalid username/password combination'
+        return 'Invalid username/password combination'
+
+    return render_template('login.html')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -39,6 +60,7 @@ def register():
             hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             users.insert_one({'username' : request.form['username'], 'password' : hashpass})
             session['username'] = request.form['username']
+            session['category'] = 'Default Category'  # Set a default category
             return redirect(url_for('index'))
 
         return 'That username already exists!'
@@ -48,6 +70,7 @@ def register():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
+    session.pop('category', None)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
