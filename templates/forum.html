@@ -2,13 +2,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
-    <title>{{ category }} Category - LandingPages</title>
+    <title>{{ category }} - BugBuddyHQ</title>
 </head>
 <body>
     <header class="text-gray-700 body-font border-b border-gray-200">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
           <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="https://tailblocks.cc" target="_blank">
-            <span class="ml-3 text-xl">{{ category }} </span>
+            <span class="ml-3 text-xl">{{ category }} - BugBuddyHQ</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             
@@ -34,7 +34,7 @@
             </h1>
             <p class="mb-8 leading-relaxed">Help the community expand their knowledge in problem solving.</p>
             <div class="flex justify-center">
-              <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">POST</button>
+              <a href="{{ url_for('post_issue', category=category) }}" class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">POST</a>
             </div>
           </div>
           <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

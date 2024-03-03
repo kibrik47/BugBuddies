@@ -32,7 +32,7 @@ def unresolved_posts(category):
 def post_issue(category):
     # Add logic for posting an issue in the given category
     # For now, let's return a simple message
-    return f"Post an issue in {category}"
+    return render_template('post.html', category=category)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -14,6 +14,9 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Arial, sans-serif;
+    color: white; /* Text color */
+    text-align: center;
+    min-height: 100vh; /* Ensure the content is centered vertically */
 }
 
 .search {
@@ -69,45 +72,49 @@ body {
     margin-top: 10px;
 }
 
-/*Design for login.html*/
+/* Design for login.html */
 * {
     box-sizing: border-box;
-    }
-    
-    *:focus {
-      outline: none;
-    }
-    body {
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
     font-family: Arial;
     background-color: #3498DB;
     padding: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    }
-    .login {
+}
+
+.login {
     margin: 20px auto;
     width: 300px;
-    }
-    .login-screen {
+}
+
+.login-screen {
     background-color: #FFF;
     padding: 20px;
-    border-radius: 10px
-    }
-    
-    .app-title {
+    border-radius: 10px;
+}
+
+.app-title {
     text-align: center;
     color: #777;
-    }
-    
-    .login-form {
+}
+
+.login-form {
     text-align: center;
-    }
-    .control-group {
+}
+
+.control-group {
     margin-bottom: 10px;
-    }
-    
-    input {
+}
+
+input {
     text-align: center;
     background-color: #ECF0F1;
     border: 2px solid transparent;
@@ -117,37 +124,102 @@ body {
     padding: 10px 0;
     width: 250px;
     transition: border .5s;
-    }
-    
-    input:focus {
+}
+
+input:focus {
     border: 2px solid #3498DB;
     box-shadow: none;
-    }
-    
-    .btn {
-      border: 2px solid transparent;
-      background: #3498DB;
-      color: #ffffff;
-      font-size: 16px;
-      line-height: 25px;
-      padding: 10px 0;
-      text-decoration: none;
-      text-shadow: none;
-      border-radius: 10px;
-      box-shadow: none;
-      transition: 0.25s;
-      display: block;
-      width: 250px;
-      margin: 0 auto;
-    }
-    
-    .btn:hover {
-      background-color: #2980B9;
-    }
-    
-    .login-link {
-      font-size: 12px;
-      color: #444;
-      display: block;
-      margin-top: 12px;
-    }
+}
+
+.btn {
+    border: 2px solid transparent;
+    background: #3498DB;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 25px;
+    padding: 10px 0;
+    text-decoration: none;
+    text-shadow: none;
+    border-radius: 10px;
+    box-shadow: none;
+    transition: 0.25s;
+    display: block;
+    width: 250px;
+    margin: 0 auto;
+}
+
+.btn:hover {
+    background-color: #2980B9;
+}
+
+.login-link {
+    font-size: 12px;
+    color: #444;
+    display: block;
+    margin-top: 12px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #3498db; /* Blue background color */
+    color: white; /* Text color */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensure the content is centered vertically */
+}
+
+form {
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* White background for the form */
+    border-radius: 8px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: black; /* Set label text color to black */
+}
+
+input,
+textarea,
+button {
+    width: calc(100% - 16px);
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Style the file input */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+}
