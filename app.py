@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
 import bcrypt
+import os
+from bson import ObjectId
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__, static_folder='templates/static', static_url_path='/static')
 app.secret_key = "admin"
@@ -28,11 +31,49 @@ def unresolved_posts(category):
     # For now, let's return a simple message
     return f"Unresolved posts for {category}"
 
-@app.route('/forum/<category>/post')
+@app.route('/forum/<category>/post', methods=['GET', 'POST'])
 def post_issue(category):
-    # Add logic for posting an issue in the given category
-    # For now, let's return a simple message
+    if 'username' not in session:
+        # If the user is not logged in, redirect them to the login page
+        flash('You need to be logged in to post an issue.', 'error')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        print(request.files)
+        # Access form data
+        issue_topic = request.form['issueTopic']  # Assuming the name attribute is 'postTitle'
+        description = request.form['description']
+        labels = request.form['labels']
+        specs = request.form['specs']
+
+        # Save uploaded screenshot
+        if 'screenshot' in request.files:
+            screenshot = request.files['screenshot']
+            screenshot_filename = secure_filename(screenshot.filename)
+            screenshot_path = os.path.join(app.root_path, 'templates', 'static', 'images', 'screenshots', screenshot_filename)
+            screenshot.save(screenshot_path)
+
+        # Insert the issue details into the database
+        posts = mongo.db.posts
+        post_data = {
+            'category': category,
+            'issue_topic': issue_topic,
+            'description': description,
+            'labels': labels,
+            'specs': specs,
+            'screenshot_filename': screenshot_filename if 'screenshot' in request.files else None,
+            'username': session['username']
+        }
+        result = posts.insert_one(post_data)
+
+        # Get the newly inserted post's ID
+        new_post_id = result.inserted_id
+
+        # Redirect to the view_post page with the correct category and post ID
+        return redirect(url_for('view_post', category=category, post_id=new_post_id))
+
     return render_template('post.html', category=category)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,6 +93,18 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/forum/<category>/post/<post_id>')
+def view_post(category, post_id):
+    # Fetch post details using its ID
+    posts = mongo.db.posts
+    post_data = posts.find_one({'_id': ObjectId(post_id)})
+
+    if post_data is None:
+        flash('Post not found.', 'error')
+        return redirect(url_for('forum', category=category))
+
+    # Render a template to display post details
+    return render_template('view_post.html', category=category, post=post_data)
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():

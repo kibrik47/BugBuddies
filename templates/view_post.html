@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>BugBuddyHQ - {{ category }}</title>
+</head>
+<body>
+    <header class="text-gray-700 body-font border-b border-gray-200">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="https://tailblocks.cc" target="_blank">
+            <span class="ml-3 text-xl">BugBuddyHQ - {{ category }}</span>
+          </a>
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
+            
+            <div class="relative mx-2">
+              </button>
+              <div class="nav flex justify-end">
+                <a href="{{ url_for('index') }}" class="mr-5 hover:text-gray-900">Main</a>
+                <a class="mr-5 hover:text-gray-900">Unresolved Issues</a>
+            
+                {% if 'username' in session %}
+                    <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Welcome {{ session['username'] }}!</a>
+                    <!-- Add other welcome message content or actions if needed -->
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Sign In</a>
+                {% endif %}
+            </div>            
+      </header>
+
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #555;
+        }
+
+        p {
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        img {
+            max-width: 50%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>{{ post['issue_topic'] }}</h1>
+        <p><strong>Description:</strong> {{ post['description'] }}</p>
+        <p><strong>Labels:</strong> {{ post['labels'] }}</p>
+        <p><strong>Specs:</strong> {{ post['specs'] }}</p>
+
+        <!-- Display uploaded screenshot if available -->
+        {% if post['screenshot_filename'] %}
+            <p><strong>Screenshot:</strong></p>
+            <img src="{{ url_for('static', filename='images/screenshots/' + post['screenshot_filename']) }}" alt="Screenshot">
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -11,27 +11,25 @@
             <span class="ml-3 text-xl">BugBuddyHQ - {{ category }}</span>
           </a>
           <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <div class="relative mx-2">
-                <input type="text" placeholder="Search" class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
-                <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                    <svg class="h-6 w-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m-1 0a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-            </div>
             
-            <div class="nav flex justify-end">
+            <div class="relative mx-2">
+              <input type="text" placeholder="Search" class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+              <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
+                  <svg class="h-6 w-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m-1 0a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+              </button>
+              <div class="nav flex justify-end">
                 <a href="{{ url_for('index') }}" class="mr-5 hover:text-gray-900">Main</a>
                 <a class="mr-5 hover:text-gray-900">Unresolved Issues</a>
-        
+            
                 {% if 'username' in session %}
                     <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Welcome {{ session['username'] }}!</a>
                     <!-- Add other welcome message content or actions if needed -->
                 {% else %}
                     <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Sign In</a>
                 {% endif %}
-            </div>
-        </nav>          
+            </div>            
       </header>
       <section class="text-gray-700 body-font">
         <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
