@@ -1,4 +1,3 @@
-# app.py
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
 import bcrypt
@@ -18,9 +17,9 @@ def index():
 
     return render_template('index.html', category='Default Category')
 
-# Add these lines for the forum routes
 @app.route('/forum/<category>')
 def forum(category):
+    session['category'] = category
     return render_template('forum.html', category=category)
 
 @app.route('/forum/<category>/unresolved')
@@ -43,12 +42,16 @@ def login():
 
         if login_user and bcrypt.checkpw(request.form['password'].encode('utf-8'), login_user['password']):
             session['username'] = request.form['username']
-            session['category'] = 'Default Category'  # Set a default category
-            return redirect(url_for('index'))
+            
+            # Retrieve the category from the session, or use a default value
+            category = session.get('category', 'Default Category')
+
+            return redirect(url_for('forum', category=category))  # Redirect to the forum page with the correct category
         else:
             flash('Invalid username/password combination', 'error')
 
     return render_template('login.html')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -57,6 +60,7 @@ def register():
         existing_user = users.find_one({'username': request.form['username']})
 
         if existing_user is None:
+            # Hash the password before storing it in the database
             hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             users.insert_one({'username': request.form['username'], 'password': hashpass})
             session['username'] = request.form['username']

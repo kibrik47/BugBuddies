@@ -1,4 +1,6 @@
-<html>
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +15,20 @@
             </div>
 
             <div class="login-form">
-                <div class="control-group">
-                    <input type="text" class="login-field" value="" placeholder="username" id="login-name">
-                    <label class="login-field-icon fui-user" for="login-name"></label>
-                </div>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="control-group">
+                        <input type="text" class="login-field" name="username" placeholder="Username" required>
+                        <label class="login-field-icon fui-user" for="login-name"></label>
+                    </div>
 
-                <div class="control-group">
-                    <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
-                </div>
+                    <div class="control-group">
+                        <input type="password" class="login-field" name="password" placeholder="Password" required>
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>
 
-                <a class="btn btn-primary btn-large btn-block" href="#">Login</a>
+                    <button type="submit" class="btn btn-primary btn-large btn-block">Login</button>
+                </form>
+
                 <a class="login-link" href="{{ url_for('register') }}">Don't have an account yet? Sign up!</a>
             </div>
         </div>
