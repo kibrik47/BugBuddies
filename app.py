@@ -2,8 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_pymongo import PyMongo
 import bcrypt
 import os
-from bson import ObjectId
+from bson import ObjectId, json_util
 from werkzeug.utils import secure_filename
+
+def fetch_recent_posts(category, limit=5):
+    posts = mongo.db.posts.find({'category': category})
+    all_posts = list(posts)
+    formatted_posts = []
+    for post in all_posts:
+        formatted_post = {
+            'post_id': str(post['_id']),  # Convert ObjectId to string
+            'issue_topic': post['issue_topic'],
+            'short_description': post['description'][:100],  # Limit to the first 100 characters
+            'category': post['category'],
+            # Add other fields you need
+        }
+        formatted_posts.append(formatted_post)
+
+    return formatted_posts
 
 app = Flask(__name__, static_folder='templates/static', static_url_path='/static')
 app.secret_key = "admin"
@@ -23,13 +39,8 @@ def index():
 @app.route('/forum/<category>')
 def forum(category):
     session['category'] = category
-    return render_template('forum.html', category=category)
-
-@app.route('/forum/<category>/unresolved')
-def unresolved_posts(category):
-    # Add logic to fetch unresolved posts for the given category
-    # For now, let's return a simple message
-    return f"Unresolved posts for {category}"
+    all_posts = fetch_recent_posts(category)
+    return render_template('forum.html', category=category, all_posts=all_posts)
 
 @app.route('/forum/<category>/post', methods=['GET', 'POST'])
 def post_issue(category):
