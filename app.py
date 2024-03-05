@@ -15,6 +15,7 @@ def fetch_recent_posts(category, limit=5):
             'issue_topic': post['issue_topic'],
             'short_description': post['description'][:100],  # Limit to the first 100 characters
             'category': post['category'],
+             'comments': post.get('comments', []),  # Include comments in the formatted post
             # Add other fields you need
         }
         formatted_posts.append(formatted_post)
@@ -73,8 +74,26 @@ def post_issue(category):
             'labels': labels,
             'specs': specs,
             'screenshot_filename': screenshot_filename if 'screenshot' in request.files else None,
-            'username': session['username']
+            'username': session['username'],
+            'comments': []
         }
+
+        # Assuming you have form fields with names like 'commenter_name_1', 'comment_text_1', 'commenter_name_2', 'comment_text_2', etc.
+        comment_index = 1
+        while True:
+            commenter_name = request.form.get(f'commenter_name_{comment_index}')
+            comment_text = request.form.get(f'comment_text_{comment_index}')
+
+            if commenter_name is None or comment_text is None:
+                break  # Break the loop if no more comments are found
+
+            post_data['comments'].append({
+                'commenter_name': commenter_name,
+                'comment_text': comment_text
+            })
+
+            comment_index += 1
+
         result = posts.insert_one(post_data)
 
         # Get the newly inserted post's ID
@@ -104,7 +123,7 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/forum/<category>/post/<post_id>')
+@app.route('/forum/<category>/post/<post_id>', methods=['GET', 'POST'])
 def view_post(category, post_id):
     # Fetch post details using its ID
     posts = mongo.db.posts
@@ -113,6 +132,24 @@ def view_post(category, post_id):
     if post_data is None:
         flash('Post not found.', 'error')
         return redirect(url_for('forum', category=category))
+    
+    if request.method == 'POST':
+        # Handle the form submission and update the comments in the database
+        commenter_name = request.form.get('commenter_name')
+        comment_text = request.form.get('comment_text')
+
+        if commenter_name and comment_text:
+            # Add the new comment to the post data
+            post_data.setdefault('comments', []).append({
+                'commenter_name': commenter_name,
+                'comment_text': comment_text
+            })
+
+            # Update the post in the database
+            posts.update_one({'_id': post_data['_id']}, {'$set': {'comments': post_data['comments']}})
+
+            # Redirect back to the same post page
+            return redirect(url_for('view_post', category=category, post_id=post_id))
 
     # Render a template to display post details
     return render_template('view_post.html', category=category, post=post_data)

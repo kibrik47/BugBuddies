@@ -74,6 +74,24 @@
             <img src="{{ url_for('static', filename='images/screenshots/' + post['screenshot_filename']) }}" alt="Screenshot">
         {% endif %}
     </div>
+    <div id="comments-section">
+        <h2>Comments</h2>
+        <ul id="comment-list">
+            {% for comment in post.comments %}
+                <li><strong>{{ comment.commenter_name }}</strong>: {{ comment.comment_text }}</li>
+            {% endfor %}
+        </ul>
+    
+        <form id="comment-form" method="post" action="{{ url_for('view_post', category=category, post_id=post['_id']) }}">
+            <label for="commenter_name">Your Name:</label>
+            <input type="text" id="commenter_name" name="commenter_name" required>
+    
+            <label for="comment_text">Your Comment:</label>
+            <textarea id="comment_text" name="comment_text" required></textarea>
+    
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
 </body>
 
 </html>
