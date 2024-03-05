@@ -135,13 +135,12 @@ def view_post(category, post_id):
     
     if request.method == 'POST':
         # Handle the form submission and update the comments in the database
-        commenter_name = request.form.get('commenter_name')
         comment_text = request.form.get('comment_text')
 
-        if commenter_name and comment_text:
+        if session.get('username') and comment_text:
             # Add the new comment to the post data
             post_data.setdefault('comments', []).append({
-                'commenter_name': commenter_name,
+                'commenter_name': session['username'],
                 'comment_text': comment_text
             })
 
