@@ -1,21 +1,21 @@
-<!-- login.html -->
+<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>User Registration</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="login">
         <div class="login-screen">
             <div class="app-title">
-                <h1>Welcome</h1>
+                <h1>Register</h1>
             </div>
 
             <div class="login-form">
-                <form method="POST" action="{{ url_for('login') }}">
+                <form method="POST" action="{{ url_for('register') }}">
                     <div class="control-group">
                         <input type="text" class="login-field" name="username" placeholder="Username" required>
                         <label class="login-field-icon fui-user" for="login-name"></label>
@@ -26,10 +26,10 @@
                         <label class="login-field-icon fui-lock" for="login-pass"></label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-large btn-block">Login</button>
+                    <button type="submit" class="btn btn-primary btn-large btn-block">Register</button>
                 </form>
 
-                <a class="login-link" href="{{ url_for('register') }}">Don't have an account yet? Sign up!</a>
+                <a class="login-link" href="{{ url_for('login') }}">Already have an account? Log in!</a>
             </div>
         </div>
     </div>

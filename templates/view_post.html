@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>BugBuddyHQ - {{ category }}</title>
+</head>
+<body class="font-roboto leading-relaxed">
+
+    <header class="bg-gray-200 border-b border-gray-400 p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a class="text-xl font-medium text-gray-800" href="https://tailblocks.cc" target="_blank">
+                BugBuddyHQ - {{ category }}
+            </a>
+            <nav class="flex items-center">
+                <a href="{{ url_for('index') }}" class="mr-5 hover:text-gray-900">Main</a>
+                <a href="{{ url_for('forum', category=category) }}" class="mr-5 hover:text-gray-900">Forum</a>
+                {% if 'username' in session %}
+                    <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Welcome {{ session['username'] }}!</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Sign In</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto my-8 p-8 bg-white rounded-lg shadow-lg">
+        <div class="flex items-center mb-4">
+            <img src="data:image/png;base64,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" alt="Account Icon" class="w-6 h-6 mr-2">
+            <span class="text-gray-600">{{ post['username'] }}</span>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ post['issue_topic'] }}</h1>
+        <p class="text-gray-600 mb-4"><strong>Description:</strong> {{ post['description'] }}</p>
+        <p class="text-gray-600 mb-4"><strong>Labels:</strong> {{ post['labels'] }}</p>
+        <p class="text-gray-600 mb-4"><strong>Specs:</strong> {{ post['specs'] }}</p>
+
+        <!-- Display uploaded screenshot if available -->
+        {% if post['screenshot_filename'] %}
+            <div class="mt-4">
+                <p class="text-gray-800 font-bold mb-2">Screenshot:</p>
+                <img src="{{ url_for('static', filename='images/screenshots/' + post['screenshot_filename']) }}" alt="Screenshot" class="max-w-full mx-auto w-1/2 rounded-lg shadow-md">
+            </div>
+        {% endif %}
+    </div>
+
+    <div id="comments-section" class="container mx-auto my-8 p-8 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Comments</h2>
+        <ul id="comment-list" class="list-disc pl-8">
+            {% for comment in post.comments %}
+                <li class="text-gray-700"><strong>{{ comment.commenter_name }}:</strong> {{ comment.comment_text }}</li>
+            {% endfor %}
+        </ul>
+
+        <form id="comment-form" method="post" action="{{ url_for('view_post', category=category, post_id=post['_id']) }}" class="mt-8">
+            <label for="comment_text" class="block text-gray-700 font-bold mb-2">Your Comment:</label>
+            <textarea id="comment_text" name="comment_text" required class="w-full p-2 border border-gray-300 rounded"></textarea>
+    
+            <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Submit Comment</button>
+        </form>
+    </div>
+
+</body>
+</html>
