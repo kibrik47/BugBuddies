@@ -1,7 +1,9 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:
@@ -21,6 +23,17 @@ services:
       - mongodb-data:/data/db
     networks:
       - temp-404_network  
+  
+  test_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - mongodb
+      - web
+    command: ["pytest"]
+    networks:
+      - temp-404_network
 
 networks:
   temp-404_network:  
