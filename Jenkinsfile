@@ -5,13 +5,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Login to Docker Hub
-                    withCredentials([string(credentialsId: 'kibrik47-docker-cred', variable: 'DOCKER_PASSWORD', binding: 'DOCKER_USERNAME')]) {
-                        sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-
-                        // Build Docker image
-                        sh 'docker build -t kibrik47/bugbuddies:v2 .'
-                    }
+                    // Build and tag Docker image for feature branches
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
                 }
             }
         }
