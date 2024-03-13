@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build and tag Docker image for feature branches
-                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
+                    sh 'docker build -t kibrik47/bugbuddies:v2 .'
                 }
             }
         }
