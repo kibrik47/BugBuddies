@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('BugBuddies-Docker-CRED')
+        DOCKER_HUB_CREDENTIALS = credentials('kibrik47-docker-cred')
     }
 
     stages {
@@ -10,10 +10,10 @@ pipeline {
             steps {
                 script {
                     // Retrieve Docker Hub username dynamically
-                    DOCKER_USERNAME = credentials('BugBuddies-Docker-CRED').username
+                    DOCKER_USERNAME = credentials('kibrik47-docker-cred').username
 
                     // Login to Docker Hub
-                    withCredentials([string(credentialsId: 'BugBuddies-Docker-CRED', variable: 'DOCKER_PASSWORD')]) {
+                    withCredentials([string(credentialsId: 'kibrik47-docker-cred', variable: 'DOCKER_PASSWORD')]) {
                         sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
 
                         // Build Docker image
