@@ -1,12 +1,17 @@
 pipeline {
     agent any
 
+    environment {
+        dockerImage = ''
+        registry = 'kibrik47/bugbuddies'
+    }
+
     stages {
         stage('Build Docker Image') {
             steps {
                 script {
                     // Build and tag Docker image for feature branches
-                    sh 'docker build -t kibrik47/bugbuddies:v2 .'
+                    dockerImage = docker.build registry
                 }
             }
         }
