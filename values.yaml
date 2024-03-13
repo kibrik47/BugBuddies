@@ -1,0 +1,7 @@
+webapp:
+  image:
+    repository: kibrik47/bugbuddies
+    tag: v2
+  service:
+    port: 5000
+
