@@ -11,6 +11,8 @@ pipeline {
             steps {
                 script {
                     // Build and tag Docker image for feature branches
+                    echo "PATH: ${env.PATH}"
+                    sh 'docker --version'
                     dockerImage = docker.build registry
                 }
             }
