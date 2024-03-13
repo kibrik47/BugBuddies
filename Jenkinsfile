@@ -32,6 +32,7 @@ pipeline {
                 }
             }
         }
+    } // Close the stages block
 
     post {
         failure {
