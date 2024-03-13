@@ -27,30 +27,11 @@ pipeline {
             steps {
                 script {
                     // Run unit tests using pytest
-                    sh 'pip install pytest'
-                    sh 'pytest'
+                    sh 'docker-compose up'
+                    sh 'docker-compose run test_app'
                 }
             }
         }
-
-        stage('HELM Package Build') {
-            steps {
-                script {
-                    // Add commands to build HELM package
-                    sh 'helm package .'
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                script {
-                    // Add commands to deploy the application
-                    // This could include applying the HELM chart, deploying to Kubernetes, etc.
-                }
-            }
-        }
-    }
 
     post {
         failure {
