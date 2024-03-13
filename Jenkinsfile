@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     // Add commands to build HELM package
-                    sh 'helm package ./charts/your_chart_directory'
+                    sh 'helm package .'
                 }
             }
         }
