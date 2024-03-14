@@ -1,20 +1,37 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'ez-joy-friends'
+            idleMinutes 5
+            yamlFile 'build-pod.yaml'
+            defaultContainer 'ez-docker-helm-build'
+        }
+    }
+
+    environment {
+        GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
+        DOCKER_IMAGE = 'kibrik47/bugbuddies'
+    }
+
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                // Checkout source code from GitLab
-                git 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
+                git branch: 'main',
+                    credentialsId: 'kibrik47-gitlab-cred',
+                    url: 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
             }
         }
-        stage('Build Docker Image') {
+        
+        stage('Build Docker image') {
             steps {
-                // Build Docker image
                 script {
-                    docker.build('kibrik47/bugbuddies:latest')
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
                 }
             }
         }
+
+        
+        // Add more stages as needed
     }
 }
