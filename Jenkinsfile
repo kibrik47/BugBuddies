@@ -10,6 +10,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
+
     }
 
     stages {
@@ -17,12 +18,12 @@ pipeline {
             steps {
                 checkout scm
             }
-        } // Closing brace was added here
+        }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .") // Fixed the assignment operator
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
                 }
             }
         }
