@@ -11,8 +11,6 @@ pipeline {
         DOCKER_IMAGE = "kibrik47/bugbuddies"
     }
 
-
-
     stages {
         stage('Checkout') {
             steps {
@@ -20,10 +18,8 @@ pipeline {
                 checkout scm
             }
         }
-       
-    }
 
-    stage('Build Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 script {
                     // Build and tag Docker image for feature branches
@@ -31,5 +27,5 @@ pipeline {
                 }
             }
         }
-
+    }
 }
