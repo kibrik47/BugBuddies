@@ -1,9 +1,5 @@
 pipeline {
     agent any
-
-    environment {
-        dockerImage = ''
-        registry = 'kibrik47/bugbuddies'
     }
 
     stages {
@@ -11,10 +7,7 @@ pipeline {
             steps {
                 script {
                     // Build and tag Docker image for feature branches
-                    echo "PATH: ${env.PATH}"
-                    sh 'docker --version'
-                    dockerImage = docker.build registry
-                }
+                    sh 'docker build -t kibrik47/bugbuddies:$BUILD_NUMBER .'
             }
         }
 
