@@ -9,6 +9,9 @@ pipeline {
         }
     }
 
+    environment {
+        DOCKER_IMAGE = 'kibrik47/bugbuddies'
+    }
 
     stages {
         stage('Checkout Code') {
