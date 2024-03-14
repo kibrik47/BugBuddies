@@ -6,6 +6,7 @@ pipeline {
             yamlFile 'build-pod.yaml'
             defaultContainer 'ez-docker-helm-build'
         }
+    }
     environment {
         DOCKER_IMAGE = "kibrik47/bugbuddies"
     }
