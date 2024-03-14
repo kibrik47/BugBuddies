@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        GITLAB_CREDS = 'kibrik47-gitlab-cred'
+        GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
     }
 
