@@ -5,10 +5,8 @@ pipeline {
             idleMinutes 5
             yamlFile 'build-pod.yaml'
             defaultContainer 'ez-docker-helm-build'
-
         }
     }
-
 
     environment {
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
@@ -19,11 +17,12 @@ pipeline {
             steps {
                 checkout scm
             }
+        } // Closing brace was added here
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage - docker.build("${DOCKER_IMAGE}:latest", "--no-cache .")
+                    dockerImage = docker.build("${DOCKER_IMAGE}:latest", "--no-cache .") // Fixed the assignment operator
                 }
             }
         }
@@ -38,6 +37,5 @@ pipeline {
                 }
             }
         }
-    } 
-
+    }
 }
