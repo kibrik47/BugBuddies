@@ -1,4 +1,5 @@
 pipeline {
+    pipeline {
     agent {
         kubernetes {
             label 'ez-joy-friends'
@@ -9,18 +10,12 @@ pipeline {
         }
     }
 
+
     environment {
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
     }
 
     stages {
-        stage('Checkout Code') {
-            steps{
-                checkout scm
-            }
-        }
-
-
         stage('Build Docker Image') {
             steps {
                 script {
@@ -33,22 +28,12 @@ pipeline {
             steps {
                 script {
                     // Run unit tests using pytest
-                    sh 'docker-compose up'
-                    sh 'docker-compose run test_app'
+                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml run test_app pytest'
+                    sh 'docker-compose -f docker-compose.yaml down'
                 }
             }
         }
-    } // Close the stages block
+    } 
 
-    post {
-        failure {
-            script {
-                // Send email notification for failed builds
-                emailext subject: "Failed: ${currentBuild.fullDisplayName}",
-                          body: 'Something went wrong. Please investigate.',
-                          to: 'ariel.kibrik2@gmail.com',
-                          mimeType: 'text/html'
-            }
-        }
-    }
 }
