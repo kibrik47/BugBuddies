@@ -9,19 +9,17 @@ pipeline {
     }
 
     environment {
-        GITLAB_CREDS = 'BugBuddiesGLToken'
+        GITLAB_CREDS = 'kibrik47-gitlab-cred'
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
-        MONGODB_URI = 'mongodb://mongo:27017/your_database'
-        PROJECT_ID = ''
-        GITLAB_URL = 'https://gitlab.com'
     }
 
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                // Checkout the repository
-                checkout scm
+                git branch: 'main',
+                    credentialsId: 'kibrik47-gitlab-cred',
+                    url: 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
             }
         }
         
