@@ -11,6 +11,7 @@ pipeline {
     environment {
         GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
+
     }
 
 
@@ -41,6 +42,21 @@ pipeline {
                 }
             }
         }
+
+
+        stage('Push Docker image') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'kibrik47-docker-cred') {
+                        dockerImage.push("latest")
+                    }
+                }
+            }
+        }
+
 
     }
 }
