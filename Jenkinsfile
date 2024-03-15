@@ -15,6 +15,22 @@ pipeline {
 
     }
 
+    
+    def getNextImageVersion() {
+        def versionFile = 'image_version.txt'
+        def currentVersion = 0
+        if (fileExists(versionFile)) {
+            currentVersion = readFile(versionFile).trim().toInteger()
+        }
+        currentVersion++
+        writeFile file: versionFile, text: "${currentVersion}"
+        return currentVersion
+    }
+
+    def fileExists(filePath) {
+        return file(filePath).exists()
+    }
+
 
     stages {
         stage('Checkout Code') {
@@ -57,21 +73,5 @@ pipeline {
                 }
             }
         }
-    }
-
-
-    def getNextImageVersion() {
-        def versionFile = 'image_version.txt'
-        def currentVersion = 0
-        if (fileExists(versionFile)) {
-            currentVersion = readFile(versionFile).trim().toInteger()
-        }
-        currentVersion++
-        writeFile file: versionFile, text: "${currentVersion}"
-        return currentVersion
-    }
-
-    def fileExists(filePath) {
-        return file(filePath).exists()
     }
 }
