@@ -11,7 +11,6 @@ pipeline {
     environment {
         GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
-        IMAGE_VERSION = getNextImageVersion()
     }
 
     stages {
