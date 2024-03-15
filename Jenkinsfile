@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             label 'ez-joy-friends'
             idleMinutes 5
-            yamlFile 'build-pod.yaml'
+            yamlFile 'build.pod.yaml'
             defaultContainer 'ez-docker-helm-build'
         }
     }
