@@ -32,6 +32,15 @@ pipeline {
         }
 
         
-        // Add more stages as needed
+       stage('Test') {
+            steps {
+                script {
+                    sh 'docker-compose -f docker-compose.yaml up -d'
+                    sh 'docker-compose -f docker-compose.yaml run test_app pytest'
+                    sh 'docker-compose -f docker-compose.yaml down'
+                }
+            }
+        }
+
     }
 }
