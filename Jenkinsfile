@@ -11,6 +11,7 @@ pipeline {
     environment {
         GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
+        IMAGE_VERSION = "${DOCKER_IMAGE}:${$BUILD_NUMBER}"
     }
 
     stages {
@@ -25,7 +26,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    dockerImage = docker.build("${DOCKER_IMAGE}:${IMAGE_VERSION}", "--no-cache .")
+                    dockerImage = docker.build(IMAGE_VERSION, "--no-cache .")
                 }
             }
         }
@@ -49,7 +50,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'kibrik47-docker-cred') {
-                        dockerImage.push("${IMAGE_VERSION}")
+                        dockerImage.push()
                     }
                 }
             }
