@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'kibrik47-docker-cred') {
-                        dockerImage.push()
+                        dockerImage.push(IMAGE_VERSION)
                     }
                 }
             }
