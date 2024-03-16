@@ -18,9 +18,8 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    credentialsId: 'kibrik47-gitlab-cred',
-                    url: 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
+                credentialsId: 'kibrik47-gitlab-cred',
+                url: 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
             }
         }
         
@@ -45,9 +44,6 @@ pipeline {
 
 
         stage('Push Docker image') {
-            when {
-                branch 'main'
-            }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'kibrik47-docker-cred') {
