@@ -56,9 +56,8 @@ pipeline {
                 }
             }
         }
-    }
 
-     stage('Create Merge Request') {
+        stage('Create Merge Request') {
             when {
                 not {
                     branch 'main'
@@ -86,5 +85,5 @@ pipeline {
                 }
             }
         }
-
+    }
 }
