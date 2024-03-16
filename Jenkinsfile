@@ -18,9 +18,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main',
-                    credentialsId: 'kibrik47-gitlab-cred',
-                    url: 'https://gitlab.com/sela-tracks/1101/ariel/temp-404.git'
+                checkout scm
             }
         }
         
@@ -45,9 +43,7 @@ pipeline {
 
 
         stage('Push Docker image') {
-            when {
-                branch 'main'
-            }
+
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'kibrik47-docker-cred') {
@@ -65,7 +61,7 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'kibrik47-access-token', variable: 'GITLAB_API_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'kibrik47', variable: 'GITLAB_API_TOKEN')]) {
                         def response = sh(script: """
                         curl -s -o response.json -w "%{http_code}" --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" -X POST "${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/merge_requests" \
                         --form "source_branch=${env.BRANCH_NAME}" \
