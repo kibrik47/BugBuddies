@@ -11,6 +11,8 @@ pipeline {
     environment {
         GITLAB_CREDS = credentials('kibrik47-gitlab-cred')
         DOCKER_IMAGE = 'kibrik47/bugbuddies'
+        GITLAB_URL = 'https://gitlab.com'
+        PROJECT_ID = '55379359'
     }
 
     stages {
@@ -64,7 +66,7 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dary-gitlab-api', variable: 'GITLAB_API_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'kibrik47-access-token', variable: 'GITLAB_API_TOKEN')]) {
                         def response = sh(script: """
                         curl -s -o response.json -w "%{http_code}" --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" -X POST "${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/merge_requests" \
                         --form "source_branch=${env.BRANCH_NAME}" \
