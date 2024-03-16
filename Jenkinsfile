@@ -61,7 +61,7 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'kibrik47-gitlab-cred', variable: 'GITLAB_API_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'kibrik47', variable: 'GITLAB_API_TOKEN')]) {
                         def response = sh(script: """
                         curl -s -o response.json -w "%{http_code}" --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" -X POST "${GITLAB_URL}/api/v4/projects/${PROJECT_ID}/merge_requests" \
                         --form "source_branch=${env.BRANCH_NAME}" \
