@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: web
-        image: kibrik47/bugbuddies:v2
+        image: kibrik47/bugbuddies:latest
         ports:
           - containerPort: 5000
