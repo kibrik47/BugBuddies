@@ -9,7 +9,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGO_URI=mongodb://mongodb:27017/your_database
+      - MONGO_URI=mongodb://mongodb.default.svc.cluster.local:27017/bugbuddies-db
     networks:
       - temp-404_network 
 
