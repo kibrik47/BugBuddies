@@ -12,11 +12,11 @@ app = Flask(__name__, static_folder='templates/static', static_url_path='/static
 app.secret_key = "admin"
 
 # Configure MongoDB connection
-app.config['MONGO_URI'] = 'mongodb://mongodb.default.svc.cluster.local:27017/bugbuddies-db'
+app.config['MONGO_URI'] = 'mongodb://mongodb.default.svc.cluster.local:27017/'
 
 mongo = PyMongo(app)
 
-def create_app(mongo_uri='mongodb://mongodb.default.svc.cluster.local:27017/bugbuddies-db'):
+def create_app(mongo_uri='mongodb://mongodb:27017/test'):
     # Update the existing app configuration
     app.config['MONGO_URI'] = mongo_uri
     

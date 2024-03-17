@@ -9,7 +9,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGO_URI=mongodb://mongodb.default.svc.cluster.local:27017/bugbuddies-db
+      - MONGO_URI=mongodb://mongodb:27017/bugbuddies
     networks:
       - temp-404_network 
 
@@ -26,6 +26,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/test
     depends_on:
       - mongodb
       - web
