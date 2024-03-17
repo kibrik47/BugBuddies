@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bugbuddies-argocd
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://oauth2:glpat-nYNqWsBHYCL_ryHZzNRN@gitlab.com/sela-tracks/1101/ariel/temp-404.git
+    targetRevision: HEAD
+    path: ./helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: bugbuddies-dev
+
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated: 
+      selfHeal: true   #overrides any manual changes to the cluster and syncs it with the git repo state instead.
+      prune: true  #removes items from the cluster if they are removed from the repo.
