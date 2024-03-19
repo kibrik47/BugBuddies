@@ -4,17 +4,119 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Category Selection</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1515470131672-f8e1b92c44c6');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.7); /* Add transparency for better readability */
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .header p {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .squares-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      justify-content: center; /* Center the grid horizontally */
+    }
+
+    .square {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      background-color: rgba(255, 255, 255, 0.7); /* Add transparency for better visibility */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .square:hover {
+      transform: scale(1.05);
+    }
+
+    .square img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .square-title {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333333;
+    }
+  </style>
 </head>
 <body>
-  <h1 class="search">BugBuddyHQ</h1>
+  <div class="header">
+    <h1>BugBuddies</h1>
+    <p>Explore and collaborate on various software development topics.</p>
+  </div>
   <div class="squares-container">
-    <a href="/forum/Azure" class="square">Azure</a>
-    <a href="/forum/Kubernetes" class="square">Kubernetes</a>
-    <a href="/forum/Docker" class="square">Docker</a>
-    <a href="/forum/Terraform" class="square">Terraform</a>
-    <a href="/forum/Jenkins" class="square">Jenkins</a>
-    <a href="/forum/Prometheus" class="square">Prometheus</a>
+    <a href="/forum/Azure" class="square">
+      <img src="https://www.egovaleo.it/wp-content/uploads/2023/10/logo-c-sharp-1.png" alt="Azure">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Kubernetes" class="square">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/1200px-Kubernetes_logo_without_workmark.svg.png" alt="Kubernetes">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Docker" class="square">
+      <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/97_Docker_logo_logos-512.png" alt="Docker">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Terraform" class="square">
+      <img src="https://static-00.iconduck.com/assets.00/terraform-icon-1803x2048-hodrzd3t.png" alt="Terraform">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Jenkins" class="square">
+      <img src="https://ih1.redbubble.net/image.453956200.1706/tst,small,507x507-pad,600x600,f8f8f8.u5.jpg" alt="Jenkins">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Prometheus" class="square">
+      <img src="https://www.iconbolt.com/preview/facebook/elastic-ui-logos/prometheus.svg" alt="Prometheus">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Argocd" class="square">
+      <img src="https://gitlab.com/uploads/-/system/project/avatar/41322104/argocd-icon.png" alt="Argocd">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Mongodb" class="square">
+      <img src="https://1000logos.net/wp-content/uploads/2020/08/MongoDB-Emblem.jpg" alt="Mongodb">
+      <div class="square-title"></div>
+    </a>
+    <a href="/forum/Python" class="square">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png" alt="Python">
+      <div class="square-title"></div>
+    </a>
   </div>
 </body>
 </html>
