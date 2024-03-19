@@ -1,82 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css">
-    <title>BugBuddyHQ - {{ category }}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <title>BugBuddies - {{ category }}</title>
 </head>
-<body>
-    <header class="text-gray-700 body-font border-b border-gray-200">
-        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0" href="https://tailblocks.cc" target="_blank">
-            <span class="ml-3 text-xl">BugBuddyHQ - {{ category }}</span>
-          </a>
-          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <div class="relative mx-2">
-                <input type="text" placeholder="Search" class="border-2 border-gray-300 bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
-                <button type="submit" class="absolute right-0 top-0 mt-3 mr-4">
-                    <svg class="h-6 w-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m-1 0a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="nav flex justify-end">
+<body class="font-roboto leading-relaxed">
+
+    <header class="bg-gray-200 border-b border-gray-400 p-4">
+        <div class="container mx-auto flex items-center justify-between">
+            <a class="text-xl font-medium text-gray-800" href="https://tailblocks.cc" target="_blank">
+                BugBuddies - {{ category }}
+            </a>
+            <nav class="flex items-center">
                 <a href="{{ url_for('index') }}" class="mr-5 hover:text-gray-900">Main</a>
-                <a class="mr-5 hover:text-gray-900">Unresolved Issues</a>
-        
+                <a href="{{ url_for('forum', category=category) }}" class="mr-5 hover:text-gray-900">Forum</a>
                 {% if 'username' in session %}
                     <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Welcome {{ session['username'] }}!</a>
-                    <!-- Add other welcome message content or actions if needed -->
                 {% else %}
                     <a href="{{ url_for('login') }}" class="mr-5 hover:text-gray-900">Sign In</a>
                 {% endif %}
-            </div>
-        </nav>
-        <section class="text-gray-600 body-font overflow-hidden">
-            <div class="container px-5 py-24 mx-auto">
-                <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                    <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-                        <form action="/forum/{{ category }}/post" method="post" enctype="multipart/form-data">
-                            <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">
-                                <label for="postTitle">Issue Topic:</label>
-                                <input type="text" id="postTitle" name="issueTopic" required>
-                            </h1>
-                            <div class="flex mb-4">
-                                <a class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">Details</a>
-                            </div>
-                            <p class="leading-relaxed mb-4">
-                                <label for="postDescription">Description:</label>
-                                <textarea id="postDescription" name="description" rows="8" required></textarea>
-                            </p>
-                            <div class="flex border-t border-gray-200 py-2">
-                                <span class="text-gray-500">LABELS:</span>
-                                <input type="text" id="postLabels" name="labels">
-                            </div>
-                            <div class="flex border-t border-gray-200 py-2">
-                                <span class="text-gray-500">SPECS</span>
-                                <input type="text" id="postSpecs" name="specs">
-                            </div>
-                            <div class="flex border-t border-b mb-6 border-gray-200 py-2">
-                                <span class="text-gray-500">INSERT SCREENSHOTS</span>
-                                <input type="file" id="postScreenshots" name="screenshot" accept="image/*">
-                            </div>
-                            <div class="flex">
-                                <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded" type="submit">POST</button>
-                                <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                                    <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        class="w-5 h-5" viewBox="0 0 24 24">
-                                        <path
-                                            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </form>
+            </nav>
+        </div>
+    </header>
+        <section class="text-gray-700 body-font overflow-hidden">
+            <div class="container px-5 py-10 mx-auto">
+              <div class="lg:w-3/4 mx-auto flex flex-wrap items-center justify-between">
+                <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+                  <h1 class="text-3xl font-semibold text-gray-900 mb-4">Submit New Issue</h1>
+                  <form action="/forum/{{ category }}/post" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                      <label for="postTitle" class="block text-sm font-medium text-gray-900 mb-2">Issue Topic</label>
+                      <input type="text" id="postTitle" name="issueTopic" class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required>
                     </div>
-                    <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                        src="https://cdn-icons-png.freepik.com/512/4712/4712846.png">
+                    <div class="mb-4">
+                      <label for="postDescription" class="block text-sm font-medium text-gray-900 mb-2">Description</label>
+                      <textarea id="postDescription" name="description" rows="6" class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                      <label for="postLabels" class="block text-sm font-medium text-gray-900 mb-2">Labels</label>
+                      <input type="text" id="postLabels" name="labels" class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                      <label for="postSpecs" class="block text-sm font-medium text-gray-900 mb-2">Specs</label>
+                      <input type="text" id="postSpecs" name="specs" class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                      <label for="postScreenshots" class="block text-sm font-medium text-gray-900 mb-2">Insert Screenshots</label>
+                      <input type="file" id="postScreenshots" name="screenshot" accept="image/*" class="w-full bg-gray-100 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <button class="bg-indigo-500 text-white py-2 px-6 rounded-md focus:outline-none hover:bg-indigo-600" type="submit">Submit</button>
+                  </form>
                 </div>
+                <div class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded-lg overflow-hidden">
+                  <img alt="Screenshot" class="w-full h-full object-cover object-center rounded-lg" src="https://t4.ftcdn.net/jpg/04/63/46/45/360_F_463464553_6SVpcBteOsWd5poE8HzAoseMO9GY4qL0.jpg">
+                </div>
+              </div>
             </div>
-        </section>
-    </body>
-    </html>
+          </section>
