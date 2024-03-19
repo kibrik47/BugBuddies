@@ -12,7 +12,7 @@ spec:
     path: ./helm
   destination:
     server: https://kubernetes.default.svc
-    namespace: bugbuddies-dev
+    namespace: dev
 
 
   syncPolicy:

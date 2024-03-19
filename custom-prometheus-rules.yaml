@@ -1,0 +1,29 @@
+additionalPrometheusRulesMap:
+  rule-name:
+    groups:
+    - name: project
+      rules:
+      - alert: LowRunningPodsCount
+        expr: count(kube_pod_status_phase{namespace="dev", pod=~"bugbuddies.*", phase="Running"}) < 3
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Low number of running pods"
+          description: "The count of running pods matching 'bugbuddies*' in namespace 'dev' is below 3."
+      - alert: HighCpuUsage
+        expr: sum(rate(container_cpu_usage_seconds_total{namespace="dev", container!="", pod=~"bugbuddies.*"}[5m])) by (pod) / sum(kube_pod_container_resource_limits_cpu_cores{namespace="dev", container!="", pod=~"bugbuddies.*"}) by (pod) > 0.2
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage for one or more pods matching 'bugbuddies*' in namespace 'dev' is above 80% of its limit."
+      - alert: HighMemoryUsage
+        expr: sum(rate(container_memory_usage_bytes{namespace="dev", container!="", pod=~"bugbuddies.*"}[5m])) by (pod) / sum(kube_pod_container_resource_limits_memory_bytes{namespace="dev", container!="", pod=~"bugbuddies.*"}) by (pod) > 0.8
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage for one or more pods matching 'bugbuddies*' in namespace 'dev' is above 80% of its limit."

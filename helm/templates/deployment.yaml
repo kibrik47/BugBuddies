@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp-web
+  name: bugbuddies
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: myapp-web
+      app: bugbuddies
   template:
     metadata:
       labels:
-        app: myapp-web
+        app: bugbuddies
     spec:
       containers:
-      - name: web
+      - name: webapp
         image: kibrik47/bugbuddies:latest
         ports:
           - containerPort: 5000
