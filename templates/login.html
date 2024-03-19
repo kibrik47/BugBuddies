@@ -1,36 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8" />
+  <title>Webleb</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" /> <!-- Link to your existing CSS file -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      padding: 40px;
+    }
+
+    .box h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .box form {
+      margin-top: 30px;
+    }
+
+    .box label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .box input[type="text"],
+    .box input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .box input[type="submit"] {
+      width: 100%;
+      background-color: #0c787d;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .box input[type="submit"]:hover {
+      background-color: #129aa1;
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .signup-link a {
+      display: inline-block;
+      background-color: #129aa1;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .signup-link a:hover {
+      background-color: #0c787d;
+    }
+  </style>
 </head>
 <body>
-    <div class="login">
-        <div class="login-screen">
-            <div class="app-title">
-                <h1>Welcome</h1>
-            </div>
+  <div class="container">
+    <h1>Login</h1>
+    <form name="form1" class="box" method="post" action="{{ url_for('login') }}">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" placeholder="Enter your username" required />
 
-            <div class="login-form">
-                <form method="POST" action="{{ url_for('login') }}">
-                    <div class="control-group">
-                        <input type="text" class="login-field" name="username" placeholder="Username" required>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" placeholder="Enter your password" required />
 
-                    <div class="control-group">
-                        <input type="password" class="login-field" name="password" placeholder="Password" required>
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                    </div>
+      <input type="submit" value="Sign in" />
 
-                    <button type="submit" class="btn btn-primary btn-large btn-block">Login</button>
-                </form>
+    </form>
 
-                <a class="login-link" href="{{ url_for('register') }}">Don't have an account yet? Sign up!</a>
-            </div>
-        </div>
+    <div class="signup-link">
+      Don't have an account? <a href="{{ url_for('register') }}">Sign up!</a>
     </div>
+  </div>
 </body>
 </html>
