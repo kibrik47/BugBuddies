@@ -2,8 +2,15 @@ import requests
 import pytest
 from flask import Flask
 from app import create_app
+from flask import url_for
+from bson import ObjectId
+
+
+
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import os
+os.environ['FLASK_ENV'] = 'testing'
 
 # Assuming your Flask app is created using the create_app function
 app, _ = create_app()
@@ -18,7 +25,7 @@ def test_routes_return_200_or_302(client):
     static_routes = ['/', '/login', '/logout', '/register']
 
     # Dynamic route for the category selection page
-    category_selection_route = '/'  # Adjust this if the category links are in a different route
+    category_selection_route = '/' 
 
     # Make sure the category selection page returns a status code of 200 or 302
     response_category_selection = client.get(category_selection_route)
@@ -52,3 +59,55 @@ def test_routes_return_200_or_302(client):
     for route in static_routes:
         response = client.get(route)
         assert response.status_code in [200, 302], f"Failed for route {route}. Status code: {response.status_code}"
+
+def test_register_username_length_error(client):
+    # Simulate a registration attempt with a username that doesn't meet the length requirement
+    invalid_username = 'abc'  # Username with less than 4 letters
+
+    # Make a POST request to register with the invalid username
+    response = client.post('/register', data={'username': invalid_username, 'password': 'test_password'})
+
+    # Check if the response status code is 200 (registration page should still be accessible)
+    assert response.status_code == 200
+
+    # Check if the response contains the error message related to username length
+    assert b'Username must contain at least 4 letters (a-z or A-Z)' in response.data
+
+def test_register_password_length_error(client):
+    # Simulate a registration attempt with a password that doesn't meet the length requirement
+    invalid_password = '1234'  # Password with less than 5 characters
+
+    # Make a POST request to register with the invalid password
+    response = client.post('/register', data={'username': 'test_user', 'password': invalid_password})
+
+    # Check if the response status code is 200 (registration page should still be accessible)
+    assert response.status_code == 200
+
+    # Check if the response contains the error message related to password length
+    assert b'Password must contain at least 5 characters' in response.data
+
+
+
+
+
+def test_post_issue(client):
+    # Log in first to access the post page
+    login_response = client.post('/login', data={'username': 'test_user', 'password': 'test_password'}, follow_redirects=True)
+    assert login_response.status_code == 200  # Check if login was successful
+    
+    # Test posting an issue
+    issue_data = {
+        'issueTopic': 'Test Issue',
+        'description': 'This is a test issue description',
+        'labels': 'test, issue',
+        'specs': 'Test specifications',
+    }
+    
+    post_response = client.post('/forum/test_category/post', data=issue_data, follow_redirects=True)
+    assert post_response.status_code == 200  # Check if posting the issue was successful
+    
+    # Parse the HTML response using BeautifulSoup
+    soup = BeautifulSoup(post_response.data, 'html.parser')
+    
+    # Find the part of the response containing the issue content
+    issue_content = soup.find('div', class_='issue-content')

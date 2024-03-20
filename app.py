@@ -5,6 +5,7 @@ import os
 from bson import ObjectId
 from werkzeug.utils import secure_filename
 from werkzeug.urls import url_quote
+import re
 
 
 
@@ -184,6 +185,18 @@ def register_routes(app, mongo):
             users = mongo.db.users
             existing_user = users.find_one({'username': request.form['username']})
 
+            # Validate the username format
+            if not re.match(r'[a-zA-Z]{4,}', request.form['username']):
+                # Display error message for username with less than 4 letters
+                flash('Username must contain at least 4 letters (a-z or A-Z).', 'error')
+                return render_template('register.html', username_error=True)
+
+            # Validate the password length
+            if len(request.form['password']) < 5:
+                # Display error message for password with less than 5 characters
+                flash('Password must contain at least 5 characters.', 'error')
+                return render_template('register.html', password_error=True)
+
             if existing_user is None:
                 # Hash the password before storing it in the database
                 hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
@@ -192,8 +205,11 @@ def register_routes(app, mongo):
                 session['category'] = 'Default Category'  # Set a default category
                 return redirect(url_for('index'))
             else:
+                # Display error message for existing username
                 flash('That username already exists!', 'error')
+                return render_template('register.html', username_error=True)
 
+        # Render the registration form
         return render_template('register.html')
 
     @app.route('/logout')

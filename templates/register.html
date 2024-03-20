@@ -90,13 +90,21 @@
     <form name="form1" class="box" method="post" action="{{ url_for('register') }}">
       <label for="username">Username</label>
       <input type="text" name="username" id="username" placeholder="Enter your username" required />
-
+      <!-- Display username error message -->
+      {% if username_error %}
+          <div style="color: red;">Username must contain at least 4 letters (a-z or A-Z).</div>
+      {% endif %}
+  
       <label for="password">Password</label>
       <input type="password" name="password" id="password" placeholder="Enter your password" required />
-
+      <!-- Display password error message -->
+      {% if password_error %}
+          <div style="color: red;">Password must contain at least 5 characters.</div>
+      {% endif %}
+  
       <input type="submit" value="Register" />
+  </form>
 
-    </form>
 
     <div class="signup-link">
       Already have an account? <a href="{{ url_for('login') }}">Log in!</a>
