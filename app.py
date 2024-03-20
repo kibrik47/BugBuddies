@@ -80,9 +80,15 @@ def register_routes(app, mongo):
             # Save uploaded screenshot
             if 'screenshot' in request.files:
                 screenshot = request.files['screenshot']
-                screenshot_filename = secure_filename(screenshot.filename)
-                screenshot_path = os.path.join(app.root_path, 'templates', 'static', 'images', 'screenshots', screenshot_filename)
-                screenshot.save(screenshot_path)
+                if screenshot.filename != '':
+                    screenshot_filename = secure_filename(screenshot.filename)
+                    screenshot_path = os.path.join(app.root_path, 'templates', 'static', 'images', 'screenshots', screenshot_filename)
+                    screenshot.save(screenshot_path)
+                else:
+                    screenshot_filename = None
+            else:
+                screenshot_filename = None
+
 
             # Insert the issue details into the database
             posts = mongo.db.posts
