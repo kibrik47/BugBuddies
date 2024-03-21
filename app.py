@@ -46,8 +46,8 @@ def fetch_recent_posts(category, limit=5):
 
 def register_routes(app, mongo):
     # Routes
-    @app.route('/')
-    def index():
+    #@app.route('/')
+    #def index():
         app.logger.info(f"Category value: {session.get('category')}")
         if 'username' in session:
             return render_template('index.html', category=session.get('category', 'Default Category'))
