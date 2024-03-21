@@ -202,7 +202,7 @@ def register_routes(app, mongo):
                 hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
                 users.insert_one({'username': request.form['username'], 'password': hashpass})
                 session['username'] = request.form['username']
-                session['category'] = 'category=category'  # Set a default category
+                session['category'] = 'Default Category'  # Set a default category
                 return redirect(url_for('index'))
             else:
                 # Display error message for existing username
