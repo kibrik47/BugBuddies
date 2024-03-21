@@ -186,10 +186,10 @@ def register_routes(app, mongo):
             existing_user = users.find_one({'username': request.form['username']})
 
             # Validate the username format
-            if not re.match(r'[a-zA-Z]{4,}', request.form['username']):
-                # Display error message for username with less than 4 letters
-                flash('Username must contain at least 4 letters (a-z or A-Z).', 'error')
-                return render_template('register.html', username_error=True)
+            if not re.match(r'^[a-zA-Z0-9]{4,}$', request.form['username']):
+                # Display error message for invalid username format
+                flash('Username must contain at least 4 letters (a-z or A-Z) and should not contain special characters.', 'error')
+                return render_template('register.html', username_error=True, special_char_error=True)
 
             # Validate the password length
             if len(request.form['password']) < 5:
@@ -202,7 +202,7 @@ def register_routes(app, mongo):
                 hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
                 users.insert_one({'username': request.form['username'], 'password': hashpass})
                 session['username'] = request.form['username']
-                session['category'] = 'Default Category'  # Set a default category
+                session['category'] = category=category  # Set a default category
                 return redirect(url_for('index'))
             else:
                 # Display error message for existing username

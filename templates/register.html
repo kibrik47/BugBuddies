@@ -90,9 +90,12 @@
     <form name="form1" class="box" method="post" action="{{ url_for('register') }}">
       <label for="username">Username</label>
       <input type="text" name="username" id="username" placeholder="Enter your username" required />
-      <!-- Display username error message -->
+      <!-- Display username error messages -->
       {% if username_error %}
           <div style="color: red;">Username must contain at least 4 letters (a-z or A-Z).</div>
+      {% endif %}
+      {% if special_char_error %}
+          <div style="color: red;">Username should not contain special characters.</div>
       {% endif %}
   
       <label for="password">Password</label>
@@ -103,6 +106,7 @@
       {% endif %}
   
       <input type="submit" value="Register" />
+  </form>>
   </form>
 
 
