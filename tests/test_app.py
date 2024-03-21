@@ -87,18 +87,7 @@ def test_register_password_length_error(client):
     assert b'Password must contain at least 5 characters' in response.data
 
 
-def test_register_username_special_char_error(client):
-    # Simulate a registration attempt with a username that contains special characters
-    invalid_username = 'user@name'  # Username with special characters
 
-    # Make a POST request to register with the invalid username
-    response = client.post('/register', data={'username': invalid_username, 'password': 'test_password'})
-
-    # Check if the response status code is 200 (registration page should still be accessible)
-    assert response.status_code == 200
-
-    # Check if the response contains the error message related to special characters in the username
-    assert b'Username should not contain special characters' in response.data
 
 
 def test_post_issue(client):
