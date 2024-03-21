@@ -189,7 +189,7 @@ def register_routes(app, mongo):
             if not re.match(r'^[a-zA-Z0-9]{4,}$', request.form['username']):
                 # Display error message for invalid username format
                 flash('Username must contain at least 4 letters (a-z or A-Z) and should not contain special characters.', 'error')
-                return render_template('register.html', username_error=True, special_char_error=True)
+                return render_template('register.html', username_error=True)
 
             # Validate the password length
             if len(request.form['password']) < 5:
@@ -197,17 +197,17 @@ def register_routes(app, mongo):
                 flash('Password must contain at least 5 characters.', 'error')
                 return render_template('register.html', password_error=True)
 
-            if existing_user is None:
-                # Hash the password before storing it in the database
-                hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
-                users.insert_one({'username': request.form['username'], 'password': hashpass})
-                session['username'] = request.form['username']
-                session['category'] = category=category  # Set a default category
-                return redirect(url_for('index'))
-            else:
+            if existing_user:
                 # Display error message for existing username
                 flash('That username already exists!', 'error')
                 return render_template('register.html', username_error=True)
+
+            # Hash the password before storing it in the database
+            hashpass = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+            users.insert_one({'username': request.form['username'], 'password': hashpass})
+            session['username'] = request.form['username']
+            session['category'] = 'Default Category'  # Set a default category
+            return redirect(url_for('index'))
 
         # Render the registration form
         return render_template('register.html')
