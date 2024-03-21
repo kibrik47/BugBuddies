@@ -199,7 +199,7 @@ def register_routes(app, mongo):
 
             if existing_user:
                 # Display error message for existing username
-                flash('That username already exists!', 'error')
+                flash('That username is already taken. Please choose a different one.', 'error')
                 return render_template('register.html', username_error=True)
 
             # Hash the password before storing it in the database
