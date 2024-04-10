@@ -4,7 +4,7 @@ import bcrypt
 import os
 from bson import ObjectId
 from werkzeug.utils import secure_filename
-from werkzeug.urls import url_quote
+#from werkzeug.urls import url_quote
 import re
 
 
@@ -26,10 +26,6 @@ def create_app(mongo_uri='mongodb://mongodb:27017/bugbuddies-db'):
     register_routes(app, mongo)
 
     return app, mongo
-
-def register_routes(app, mongo):
-    # Your route registrations here
-    pass
 
 def fetch_recent_posts(category, limit=5):
     posts = mongo.db.posts.find({'category': category})
@@ -73,7 +69,7 @@ def register_routes(app, mongo):
 
         if request.method == 'POST':
             # Access form data
-            issue_topic = request.form['issueTopic']  # Assuming the name attribute is 'postTitle'
+            issue_topic = request.form['issueTopic'] 
             description = request.form['description']
             labels = request.form['labels']
             specs = request.form['specs']
@@ -104,7 +100,7 @@ def register_routes(app, mongo):
                 'comments': []
             }
 
-            # Assuming you have form fields with names like 'commenter_name_1', 'comment_text_1', 'commenter_name_2', 'comment_text_2', etc.
+            
             comment_index = 1
             while True:
                 commenter_name = request.form.get(f'commenter_name_{comment_index}')
